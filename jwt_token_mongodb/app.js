@@ -1,6 +1,8 @@
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const path = require("node:path");
+const userModel = require("./models/user");
+
 const app = express();
 const PORT = 3003;
 
