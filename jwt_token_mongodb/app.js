@@ -38,7 +38,24 @@ app.post("/create", (req, res) => {
   });
 });
 
-app.get("/logout", (req, res) => {});
+app.get("/logout", (req, res) => {
+  res.cookie("token", "");
+  res.redirect("/");
+});
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", async (req, res) => {
+  let user = await userModel.findOne({ email: req.body.email });
+  if (!user) return res.send("<h1>Something is Wrong</h1>");
+
+  console.log(req.body.password, user.password, (err, result) => {
+    if (result) res.send("Yes, You can login");
+    else res.send("No, You cannot login");
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server Running at http://localhost:${PORT}`);
